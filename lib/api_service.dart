@@ -15,10 +15,6 @@ class ApiService {
           '${ApiConstants.baseUrl}${ApiConstants.viewProfile}?id=$id');
       var response = await http.get(
         url,
-        // headers: <String, String>{
-        //   'Content-Type': 'application/json',
-        //   'Accept': 'application/json',
-        // },
       );
       if (response.statusCode == 200) {
         Map<String, dynamic> model = jsonDecode(response.body);
@@ -116,11 +112,6 @@ class ApiService {
     try {
       var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.createPost}');
       var response = await http.post(url,
-          // headers: <String, String>{
-          //   'Content-Type': 'application/json',
-          //   'Accept': 'application/json',
-          // },
-          //body - in Json format
           body: jsonEncode(
             <String, dynamic>{'email': email, 'message': message, 'date': date},
           ));

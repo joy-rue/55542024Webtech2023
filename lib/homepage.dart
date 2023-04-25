@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:webtech_flutter_app/create_post.dart';
-import 'package:webtech_flutter_app/create_profile.dart';
-import 'package:webtech_flutter_app/landing.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webtech_flutter_app/profile_view.dart';
 import 'package:webtech_flutter_app/posts_view.dart';
 
@@ -17,7 +15,7 @@ class HomePage extends StatelessWidget {
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Color.fromARGB(255, 160, 22, 52),
               ),
               child: Text(
                 'Navigation Menu',
@@ -30,33 +28,42 @@ class HomePage extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.message_rounded),
               title: const Text('Posts'),
+              hoverColor: const Color.fromARGB(255, 122, 77, 87),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileView(),
-                  ),
-                );
+                GoRouter.of(context).go('/view_posts');
               },
             ),
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Profile'),
+              hoverColor: const Color.fromARGB(255, 122, 77, 87),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomeScreen(),
-                  ),
-                );
+                GoRouter.of(context).go('/view_profile');
               },
             ),
           ],
         ),
       ),
       appBar: AppBar(
-        title: const Text('Ashesi Social Space'),
-      ),
+          flexibleSpace: SafeArea(
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+                    width: 0.4, color: Color.fromARGB(255, 141, 28, 20))),
+            image: DecorationImage(
+              image: AssetImage('assets/images/wallpaper.png'),
+              repeat: ImageRepeat.repeatX,
+            ),
+          ),
+          child: const Center(
+            child: Text(
+              'Ashesi Social Space',
+              style: TextStyle(fontWeight: FontWeight.w800),
+            ),
+          ),
+        ),
+      )),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -68,8 +75,14 @@ class HomePage extends StatelessWidget {
           child: Text(
             'Welcome to Ashesi Social Space!',
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 50,
               color: Colors.white,
+              shadows: [
+                Shadow(
+                    offset: Offset.zero,
+                    color: Color.fromARGB(255, 141, 28, 20))
+              ],
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webtech_flutter_app/api_service.dart';
 
-import 'create_post.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -109,12 +109,7 @@ class _FeedPageState extends State<FeedPage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CreatePost(),
-            ),
-          );
+          GoRouter.of(context).go('/create_post');
         },
         child: const Icon(Icons.add),
       ),

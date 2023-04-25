@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webtech_flutter_app/exmethods.dart';
 
 import 'api_service.dart';
@@ -166,19 +167,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         },
                         // The validator receives the text that the user has entered.
                       )),
-                  // ConstrainedBox(
-                  //     constraints: BoxConstraints.tight(const Size(500, 50)),
-                  //     child: TextFormField(
-                  //       controller: dob,
-                  //       keyboardType: TextInputType.datetime,
-                  //       maxLines: 1,
-                  //       decoration: const InputDecoration(
-                  //         border: UnderlineInputBorder(),
-                  //         labelText: 'Date of Birth',
-                  //       ),
-
-                  //       // The validator receives the text that the user has entered.
-                  //     )),
+                
                   ConstrainedBox(
                       constraints: BoxConstraints.tight(const Size(500, 50)),
                       child: TextFormField(
@@ -249,7 +238,7 @@ class _CreateProfileState extends State<CreateProfile> {
                               );
 
                               print('done');
-                              Navigator.of(currentContxt).pop();
+                              GoRouter.of(context).go('/homepage');
                             } catch (e) {
                               // handle any errors that occur during the API call here
                               ScaffoldMessenger.of(context).showSnackBar(

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:webtech_flutter_app/api_service.dart';
 
@@ -12,8 +13,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
-  final ImagePicker _imagePicker = ImagePicker();
-  File? _imageFile;
   final dob = TextEditingController();
   final yearGroup = TextEditingController();
   final userMajor = TextEditingController();
@@ -23,8 +22,6 @@ class _EditProfileState extends State<EditProfile> {
   Map<String, dynamic>? userDetails = {};
 
   Map<String, dynamic>? _userDetails = {};
-
-  bool? _residenceStatus;
 
   @override
   void initState() {
@@ -36,21 +33,15 @@ class _EditProfileState extends State<EditProfile> {
     userDetails = await ApiService().editUserProfile("55542024");
     setState(() {
       _userDetails = userDetails;
+      yearGroup.text = _userDetails!["year"];
+      userMajor.text = _userDetails!["major"];
+      favMovie.text = _userDetails!["movie"];
+      favFood.text = _userDetails!["food"];
+      res.text = _userDetails!["res"];
+      dob.text = _userDetails!["dob"];
+      print("got here");
+      print(_userDetails!['food']);
     });
-  }
-
-  Future<void> _showImagePicker(BuildContext context) async {
-    final XFile? pickedFile = await _imagePicker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 50,
-      maxWidth: 500,
-      maxHeight: 500,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
-    }
   }
 
   @override
@@ -68,36 +59,14 @@ class _EditProfileState extends State<EditProfile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      _showImagePicker(context);
-                    },
-                    child: Container(
-                      width: 150.0,
-                      height: 150.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey,
-                        image: _imageFile != null
-                            ? DecorationImage(
-                                image: FileImage(_imageFile!),
-                                fit: BoxFit.cover,
-                              )
-                            : null,
-                      ),
-                      child: _imageFile == null
-                          ? const Icon(
-                              Icons.person,
-                              size: 100.0,
-                            )
-                          : null,
-                    ),
-                  ),
-                ),
+                    child: const Icon(
+                  Icons.person,
+                  size: 100.0,
+                )),
                 const Text("Favorite Food"),
                 TextFormField(
                   controller: favFood,
-                  initialValue: _userDetails!['food'],
+                  //initialValue: _userDetails!['food'] ?? "",
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your favorite food';
@@ -136,7 +105,6 @@ class _EditProfileState extends State<EditProfile> {
                 const Text("Favorite Movie"),
                 TextFormField(
                   controller: favMovie,
-                  initialValue: _userDetails!['movie'],
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your favorite movie';
@@ -160,49 +128,53 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide:
-                          BorderSide(color: Theme.of(context).errorColor),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.error),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide:
-                          BorderSide(color: Theme.of(context).errorColor),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.error),
                     ),
                     errorStyle: const TextStyle(fontSize: 12.0),
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                const Text("Residence Status"),
-                Row(
-                  children: [
-                    Radio<bool>(
-                      value: true,
-                      groupValue: _residenceStatus,
-                      onChanged: (value) {
-                        setState(() {
-                          _residenceStatus = value;
-                        });
-                      },
+                const Text("Are you an on Campus Resident?"),
+                TextFormField(
+                  controller: res,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    const Text("On Campus"),
-                    const SizedBox(width: 16.0),
-                    Radio<bool>(
-                      value: false,
-                      groupValue: _residenceStatus,
-                      onChanged: (value) {
-                        setState(() {
-                          _residenceStatus = value;
-                        });
-                      },
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
                     ),
-                    const Text("Off Campus"),
-                  ],
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.error),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.error),
+                    ),
+                    errorStyle: const TextStyle(fontSize: 12.0),
+                  ),
                 ),
                 const SizedBox(height: 16.0),
                 const Text("Year Group"),
                 TextFormField(
                   controller: yearGroup,
-                  initialValue: _userDetails!['year'],
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your year group';
@@ -241,7 +213,6 @@ class _EditProfileState extends State<EditProfile> {
                 const Text("Major"),
                 TextFormField(
                   controller: userMajor,
-                  initialValue: _userDetails!['major'],
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your major';
@@ -286,8 +257,8 @@ class _EditProfileState extends State<EditProfile> {
                           movie: favMovie.text,
                           year: yearGroup.text,
                           major: userMajor.text,
-                          res: _residenceStatus! as String);
-                      Navigator.of(context).pop();
+                          res: res.text);
+                      GoRouter.of(context).go('/view_profile');
                     }
                   },
                   child: const Text("Save Changes"),

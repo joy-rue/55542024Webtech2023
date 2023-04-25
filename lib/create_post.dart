@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webtech_flutter_app/api_service.dart';
 
 class CreatePost extends StatefulWidget {
@@ -86,7 +87,7 @@ class _CreatePostState extends State<CreatePost> {
                   try {
                     date = DateTime.now() as String;
                     await ApiService().createPost(email, message, date);
-                    Navigator.of(currentContxt).pop();
+                    GoRouter.of(context).go('/view_posts');
                   } catch (error) {
                     print(error);
                   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
+import 'package:webtech_flutter_app/homepage.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,11 +15,15 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
 
   void _signInWithEmailAndPassword() async {
+    
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
+     GoRouter.of(context).go('/homepage');;
+
       // User signed in
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -34,7 +40,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,22 +49,22 @@ class _LoginState extends State<Login> {
           children: [
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
               ),
               obscureText: true,
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _signInWithEmailAndPassword,
-              child: Text('Sign In'),
+              child: const Text('Sign In'),
             ),
           ],
         ),

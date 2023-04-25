@@ -1,11 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 // import 'package:email_validator/email_validator.dart';
-import 'package:flutter/services.dart';
-import 'package:webtech_flutter_app/edit_profile.dart';
-import 'package:webtech_flutter_app/exmethods.dart';
-import 'package:webtech_flutter_app/create_profile.dart';
-import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'api_service.dart';
 
@@ -34,12 +29,7 @@ class _ProfileViewState extends State<ProfileView> {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const EditProfile(),
-                  ),
-                );
+               GoRouter.of(context).go('/edit_profile');
               },
             ),
           ],
@@ -59,17 +49,17 @@ class _ProfileViewState extends State<ProfileView> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                           Container(
-                            height: 200,
+                            height: 400,
                             decoration: BoxDecoration(
-                              color: Colors.pink[100],
+                              color: Color.fromARGB(255, 138, 137, 137),
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(16.0),
                               child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                foregroundImage:
-                                    AssetImage("assets/images/student.png"),
-                                radius: 80.0,
+                                 child:const Icon(
+                              Icons.person,
+                              size: 100.0,
+                            )
                               ),
                             ),
                           ),
@@ -85,125 +75,151 @@ class _ProfileViewState extends State<ProfileView> {
                                       "Full name",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 80, 80, 80),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user["name"],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                   const Divider(
-                                      color: Color.fromARGB(255, 12, 12, 12)),
+                                    color: Color.fromARGB(255, 107, 107, 107),
+                                    thickness: .2,
+                                  ),
                                   ListTile(
                                     title: const Text(
                                       "Email",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user["email"],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                   const Divider(
-                                      color: Color.fromARGB(255, 12, 12, 12)),
+                                    color: Color.fromARGB(255, 12, 12, 12),
+                                    thickness: 0.2,
+                                  ),
                                   ListTile(
                                     title: const Text(
                                       "Student ID",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user['id'],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                   const Divider(
-                                      color: Color.fromARGB(255, 12, 12, 12)),
+                                    color: Color.fromARGB(255, 12, 12, 12),
+                                    thickness: .2,
+                                  ),
                                   ListTile(
                                     title: const Text(
                                       "Major",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user['major'],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                   const Divider(
-                                      color: Color.fromARGB(255, 12, 12, 12)),
+                                      color: Color.fromARGB(255, 12, 12, 12),
+                                      thickness: .2),
                                   ListTile(
                                     title: const Text(
                                       "Year",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user['year'],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                   const Divider(
-                                      color: Color.fromARGB(255, 12, 12, 12)),
+                                      color: Color.fromARGB(255, 12, 12, 12),
+                                      thickness: .2),
                                   ListTile(
                                     title: const Text(
                                       "Favorite food",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user['food'],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                   const Divider(
-                                      color: Color.fromARGB(255, 12, 12, 12)),
+                                      color: Color.fromARGB(255, 12, 12, 12),
+                                      thickness: .2),
                                   ListTile(
                                     title: const Text(
                                       "Favorite movies",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user['movie'],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                   const Divider(
-                                      color: Color.fromARGB(255, 12, 12, 12)),
+                                      color: Color.fromARGB(255, 12, 12, 12),
+                                      thickness: .2),
                                   ListTile(
                                     title: const Text(
-                                      "On-campus resident",
+                                      "Are you an On-campus resident",
                                       style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w200),
                                     ),
                                     subtitle: Text(
                                       user['res'],
                                       style: const TextStyle(
                                           color:
-                                              Color.fromARGB(255, 12, 12, 12)),
+                                              Color.fromARGB(255, 71, 71, 71),
+                                          fontWeight: FontWeight.w100),
                                     ),
                                   ),
                                 ],
