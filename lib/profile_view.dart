@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:email_validator/email_validator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'api_service.dart';
 
@@ -12,7 +12,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final String userId = "55542024";
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
 
   Map<String, dynamic> _userDetails = {};
 
@@ -29,14 +29,14 @@ class _ProfileViewState extends State<ProfileView> {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () {
-               GoRouter.of(context).go('/edit_profile');
+                GoRouter.of(context).go('/edit_profile');
               },
             ),
           ],
         ),
         body: FutureBuilder(
             future: ApiService().getUserProfile(
-                "55542024"), // a previously-obtained Future<String> or null
+                userId), // a previously-obtained Future<String> or null
             builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
@@ -56,11 +56,10 @@ class _ProfileViewState extends State<ProfileView> {
                             child: const Padding(
                               padding: EdgeInsets.all(16.0),
                               child: CircleAvatar(
-                                 child:const Icon(
-                              Icons.person,
-                              size: 100.0,
-                            )
-                              ),
+                                  child: const Icon(
+                                Icons.person,
+                                size: 100.0,
+                              )),
                             ),
                           ),
                           Container(

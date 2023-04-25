@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
               title: const Text('Posts'),
               hoverColor: const Color.fromARGB(255, 122, 77, 87),
               onTap: () {
-                GoRouter.of(context).go('/view_posts');
+                GoRouter.of(context).go('/homepage/view_posts');
               },
             ),
             ListTile(
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
               title: const Text('Profile'),
               hoverColor: const Color.fromARGB(255, 122, 77, 87),
               onTap: () {
-                GoRouter.of(context).go('/view_profile');
+                GoRouter.of(context).go('/homepage/view_profile');
               },
             ),
           ],

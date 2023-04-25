@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:webtech_flutter_app/api_service.dart';
 
 class CreatePost extends StatefulWidget {
@@ -12,7 +13,7 @@ class CreatePost extends StatefulWidget {
 class _CreatePostState extends State<CreatePost> {
   late String email;
   late String message;
-  late String date;
+  late DateTime date;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
@@ -85,8 +86,9 @@ class _CreatePostState extends State<CreatePost> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    date = DateTime.now() as String;
-                    await ApiService().createPost(email, message, date);
+                    date = DateTime.now();
+                    final String fDate = DateFormat.yMd().format(date);
+                    await ApiService().createPost(email, message, fDate);
                     GoRouter.of(context).go('/view_posts');
                   } catch (error) {
                     print(error);

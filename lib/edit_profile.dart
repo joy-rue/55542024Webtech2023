@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,6 +31,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<void> _getUserDetails() async {
+    var userId = FirebaseAuth.instance.currentUser!.uid;
     userDetails = await ApiService().editUserProfile("55542024");
     setState(() {
       _userDetails = userDetails;

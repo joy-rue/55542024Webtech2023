@@ -1,7 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webtech_flutter_app/api_service.dart';
-
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -32,17 +32,17 @@ class _FeedPageState extends State<FeedPage> {
                       0]); //snapshot.data contains values name, message etc not the list
                   return Container(
                     decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/wallpaper.png"),
-                        fit: BoxFit.cover,
-                      )
-                    ),
+                        image: DecorationImage(
+                      image: AssetImage("assets/images/wallpaper.png"),
+                      fit: BoxFit.cover,
+                    )),
                     child: ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
                         Map<String, dynamic> post = snapshot.data![index];
                         bool isMyPost = post['email'] ==
-                            'ruvimbo.sithole@ashesi.edu.gh'; // Replace with the logged in user's email.
+                            FirebaseAuth.instance.currentUser!
+                                .email; // Replace with the logged in user's email.
                         return Card(
                           elevation: 2.0,
                           margin: EdgeInsets.only(
@@ -109,7 +109,7 @@ class _FeedPageState extends State<FeedPage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          GoRouter.of(context).go('/create_post');
+          GoRouter.of(context).go('/view_posts/create_post');
         },
         child: const Icon(Icons.add),
       ),

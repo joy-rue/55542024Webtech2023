@@ -20,7 +20,7 @@ class _SignUpState extends State<SignUp> {
           .createUserWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text);
 
-      GoRouter.of(context).go('login');
+      GoRouter.of(context).go('/sign_up/create_profile');
     } on FirebaseAuthException catch (e) {
       print(e.code);
     } catch (e) {

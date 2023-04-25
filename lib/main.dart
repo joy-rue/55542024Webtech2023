@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:webtech_flutter_app/allposts_model.dart';
 import 'package:webtech_flutter_app/create_post.dart';
 import 'package:webtech_flutter_app/create_profile.dart';
 import 'package:webtech_flutter_app/homepage.dart';
@@ -34,80 +33,83 @@ final GoRouter _router = GoRouter(
       builder: (context, state) => WelcomeScreen(),
       routes: <GoRoute>[
         GoRoute(
-          path: 'homepage',
-          redirect: (BuildContext context, GoRouterState state) {
-            if (FirebaseAuth.instance.currentUser == null) {
-              return '/';
-            } else {
-              return null;
-            }
-          },
-          builder: (context, state) => const HomePage(),
+          path: 'login',
+          builder: (context, state) => const Login(),
         ),
         GoRoute(
-          path: 'create_profile',
-          redirect: (BuildContext context, GoRouterState state) {
-            if (FirebaseAuth.instance.currentUser == null) {
-              return '/';
-            } else {
-              return null;
-            }
-          },
-          builder: (context, state) => const CreateProfile(),
-        ),
+            path: 'sign_up',
+            builder: (context, state) => const SignUp(),
+            routes: <GoRoute>[
+              GoRoute(
+                path: 'create_profile',
+                redirect: (BuildContext context, GoRouterState state) { 
+                  if (FirebaseAuth.instance.currentUser == null) {
+                    return '/';
+                  } else {
+                    return null;
+                  }
+                },
+                builder: (context, state) => const CreateProfile(),
+              ),
+            ]),
         GoRoute(
-          path: 'create_post',
-          redirect: (BuildContext context, GoRouterState state) {
-            if (FirebaseAuth.instance.currentUser == null) {
-              return '/';
-            } else {
-              return null;
-            }
-          },
-          builder: (context, state) => const CreatePost(),
-        ),
-        GoRoute(
-          path: 'edit_profile',
-          redirect: (BuildContext context, GoRouterState state) {
-            if (FirebaseAuth.instance.currentUser == null) {
-              return '/';
-            } else {
-              return null;
-            }
-          },
-          builder: (context, state) => const EditProfile(),
-        ),
-        GoRoute(
-          path: 'view_profile',
-          redirect: (BuildContext context, GoRouterState state) {
-            if (FirebaseAuth.instance.currentUser == null) {
-              return '/';
-            } else {
-              return null;
-            }
-          },
-          builder: (context, state) => const ProfileView(),
-        ),
-        GoRoute(
-          path: 'view_posts',
-          redirect: (BuildContext context, GoRouterState state) {
-            if (FirebaseAuth.instance.currentUser == null) {
-              return '/';
-            } else {
-              return null;
-            }
-          },
-          builder: (context, state) => const FeedPage(),
-        ),
+            path: 'homepage',
+            redirect: (BuildContext context, GoRouterState state) {
+              if (FirebaseAuth.instance.currentUser == null) {
+                return '/';
+              } else {
+                return null;
+              }
+            },
+            builder: (context, state) => const HomePage(),
+            routes: <GoRoute>[
+              GoRoute(
+                path: 'edit_profile',
+                redirect: (BuildContext context, GoRouterState state) {
+                  if (FirebaseAuth.instance.currentUser == null) {
+                    return '/';
+                  } else {
+                    return null;
+                  }
+                },
+                builder: (context, state) => const EditProfile(),
+              ),
+              GoRoute(
+                path: 'view_profile',
+                redirect: (BuildContext context, GoRouterState state) {
+                  if (FirebaseAuth.instance.currentUser == null) {
+                    return '/';
+                  } else {
+                    return null;
+                  }
+                },
+                builder: (context, state) => const ProfileView(),
+              ),
+              GoRoute(
+                  path: 'view_posts',
+                  redirect: (BuildContext context, GoRouterState state) {
+                    if (FirebaseAuth.instance.currentUser == null) {
+                      return '/';
+                    } else {
+                      return null;
+                    }
+                  },
+                  builder: (context, state) => const FeedPage(),
+                  routes: [
+                    GoRoute(
+                      path: 'create_post',
+                      redirect: (BuildContext context, GoRouterState state) {
+                        if (FirebaseAuth.instance.currentUser == null) {
+                          return '/';
+                        } else {
+                          return null;
+                        }
+                      },
+                      builder: (context, state) => const CreatePost(),
+                    ),
+                  ]),
+            ])
       ],
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const Login(),
-    ),
-    GoRoute(
-      path: '/sign_up',
-      builder: (context, state) => const SignUp(),
     ),
   ],
 );
