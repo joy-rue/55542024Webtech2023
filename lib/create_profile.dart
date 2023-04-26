@@ -29,7 +29,8 @@ class _CreateProfileState extends State<CreateProfile> {
   final favMovie = TextEditingController();
 
   bool isValidEmail(val) {
-    final emailRegExp = RegExp(r"[A-Za-z]+\.[A-Za-z]+@ashesi\.edu\.gh");
+    final emailRegExp = RegExp(
+        r"[A-Za-z]+@ashesi\.edu\.gh|@aucampus.onmicrosoft.com|@gmail.com");
     return emailRegExp.hasMatch(val);
   }
 
@@ -44,13 +45,13 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   bool isValidId(val) {
-    final idRegExp = RegExp(r"^(20(0[0-9]|1[0-9]|2[0-7]))$");
+    final idRegExp = RegExp(r"\b(20(0[0-9]|1[0-9]|2[0-7]))\b");
 
     return idRegExp.hasMatch(val);
   }
 
   bool isValidYear(val) {
-    final idRegExp = RegExp(r"\b(20(0[0-9]|1[0-9]|2[0-7]))\b");
+    final idRegExp = RegExp(r"^(20((0[0-9])|(1[0-9])|(2[0-7])))$");
     return idRegExp.hasMatch(val);
   }
 
@@ -160,14 +161,14 @@ class _CreateProfileState extends State<CreateProfile> {
                         validator: (value) {
                           if (!isNotNull(value)) {
                             return 'Please enter graduation year';
-                          } else if (isValidYear(value)) {
-                            return 'Enter valid graduation year';
                           }
+                          // } else if (isValidYear(value)) {
+                          //   return 'Enter valid graduation year';
+                          // }
                           return null;
                         },
                         // The validator receives the text that the user has entered.
                       )),
-                
                   ConstrainedBox(
                       constraints: BoxConstraints.tight(const Size(500, 50)),
                       child: TextFormField(

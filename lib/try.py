@@ -8,6 +8,7 @@ import functions_framework
 import firebase_admin
 from firebase_admin import firestore
 from firebase_admin import auth
+ 
 
 # firebase_admin.initialize_app()
 
@@ -16,7 +17,8 @@ from firebase_admin import auth
 # profile_ref = db.collection('profiles')
 # post_ref = db.collection('posts')
 
-def send_emails(emails, name, text):       
+def send_emails(emails, name, text):   
+      
     # Setting up SMTP server details
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
@@ -42,14 +44,18 @@ def send_emails(emails, name, text):
     try:
         
         # Make connection to the SMTP server and send the email
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(smtp_username, smtp_password)
-            server.sendmail(sender, recipients, message.as_string())
+        # with smtplib.SMTP(smtp_server, smtp_port) as server:
+        #     server.starttls()
+        #     server.login(smtp_username, smtp_password)
+        #     server.sendmail(sender, recipients, message.as_string())
+        #     print("done")
+        templateParams = {uemail: 'ruejoysithole@gmail.com' }
+        emailjs.send("service_hobe8z3", "template_pmoxd9l", templateParams, "3M1tdZ4GBXvvWjBBl")
             
         return True
         
     except:
+        print("not")
         return False
 
 emails = ["ruejoysithole@gmail.com"]

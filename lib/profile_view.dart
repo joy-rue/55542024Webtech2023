@@ -29,7 +29,7 @@ class _ProfileViewState extends State<ProfileView> {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () {
-                GoRouter.of(context).go('/edit_profile');
+                GoRouter.of(context).go('/homepage/view_profile/edit_profile');
               },
             ),
           ],

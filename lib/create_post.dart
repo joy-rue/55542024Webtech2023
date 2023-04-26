@@ -87,9 +87,9 @@ class _CreatePostState extends State<CreatePost> {
                 onPressed: () async {
                   try {
                     date = DateTime.now();
-                    final String fDate = DateFormat.yMd().format(date);
+                    String fDate = DateFormat.yMd().add_jm().format(date);
                     await ApiService().createPost(email, message, fDate);
-                    GoRouter.of(context).go('/view_posts');
+                    GoRouter.of(context).go('/homepage/view_posts');
                   } catch (error) {
                     print(error);
                   }

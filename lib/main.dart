@@ -42,7 +42,7 @@ final GoRouter _router = GoRouter(
             routes: <GoRoute>[
               GoRoute(
                 path: 'create_profile',
-                redirect: (BuildContext context, GoRouterState state) { 
+                redirect: (BuildContext context, GoRouterState state) {
                   if (FirebaseAuth.instance.currentUser == null) {
                     return '/';
                   } else {
@@ -64,27 +64,28 @@ final GoRouter _router = GoRouter(
             builder: (context, state) => const HomePage(),
             routes: <GoRoute>[
               GoRoute(
-                path: 'edit_profile',
-                redirect: (BuildContext context, GoRouterState state) {
-                  if (FirebaseAuth.instance.currentUser == null) {
-                    return '/';
-                  } else {
-                    return null;
-                  }
-                },
-                builder: (context, state) => const EditProfile(),
-              ),
-              GoRoute(
-                path: 'view_profile',
-                redirect: (BuildContext context, GoRouterState state) {
-                  if (FirebaseAuth.instance.currentUser == null) {
-                    return '/';
-                  } else {
-                    return null;
-                  }
-                },
-                builder: (context, state) => const ProfileView(),
-              ),
+                  path: 'view_profile',
+                  redirect: (BuildContext context, GoRouterState state) {
+                    if (FirebaseAuth.instance.currentUser == null) {
+                      return '/';
+                    } else {
+                      return null;
+                    }
+                  },
+                  builder: (context, state) => const ProfileView(),
+                  routes: [
+                    GoRoute(
+                      path: 'edit_profile',
+                      redirect: (BuildContext context, GoRouterState state) {
+                        if (FirebaseAuth.instance.currentUser == null) {
+                          return '/';
+                        } else {
+                          return null;
+                        }
+                      },
+                      builder: (context, state) => const EditProfile(),
+                    ),
+                  ]),
               GoRoute(
                   path: 'view_posts',
                   redirect: (BuildContext context, GoRouterState state) {

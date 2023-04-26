@@ -109,7 +109,7 @@ class _FeedPageState extends State<FeedPage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          GoRouter.of(context).go('/view_posts/create_post');
+          GoRouter.of(context).go('/homepage/view_posts/create_post');
         },
         child: const Icon(Icons.add),
       ),

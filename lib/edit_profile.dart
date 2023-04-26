@@ -32,7 +32,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> _getUserDetails() async {
     var userId = FirebaseAuth.instance.currentUser!.uid;
-    userDetails = await ApiService().editUserProfile("55542024");
+    userDetails = await ApiService().editUserProfile(userId);
     setState(() {
       _userDetails = userDetails;
       yearGroup.text = _userDetails!["year"];
@@ -260,7 +260,7 @@ class _EditProfileState extends State<EditProfile> {
                           year: yearGroup.text,
                           major: userMajor.text,
                           res: res.text);
-                      GoRouter.of(context).go('/view_profile');
+                      GoRouter.of(context).go('/homepage/view_profile');
                     }
                   },
                   child: const Text("Save Changes"),
