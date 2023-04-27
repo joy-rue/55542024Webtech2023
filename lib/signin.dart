@@ -15,14 +15,14 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
 
   void _signInWithEmailAndPassword() async {
-    
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
-     GoRouter.of(context).go('/homepage');;
+      GoRouter.of(context).go('/homepage');
+      ;
 
       // User signed in
     } on FirebaseAuthException catch (e) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'signin.dart';
 import 'api_service.dart';
 
 class ProfileView extends StatefulWidget {
@@ -12,8 +12,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  final String userId = FirebaseAuth.instance.currentUser!.uid;
-
+  final String? uemail = FirebaseAuth.instance.currentUser!.email;
   Map<String, dynamic> _userDetails = {};
 
 // Usage in build method
@@ -36,7 +35,7 @@ class _ProfileViewState extends State<ProfileView> {
         ),
         body: FutureBuilder(
             future: ApiService().getUserProfile(
-                userId), // a previously-obtained Future<String> or null
+                uemail!), // a previously-obtained Future<String> or null
             builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:

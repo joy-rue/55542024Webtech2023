@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:webtech_flutter_app/api_service.dart';
 
 class EditProfile extends StatefulWidget {
@@ -13,6 +12,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  //obtain saved user information form database
   final _formKey = GlobalKey<FormState>();
   final dob = TextEditingController();
   final yearGroup = TextEditingController();
@@ -31,9 +31,10 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<void> _getUserDetails() async {
-    var userId = FirebaseAuth.instance.currentUser!.uid;
-    userDetails = await ApiService().editUserProfile(userId);
+    var uemail = FirebaseAuth.instance.currentUser!.email;
+    userDetails = await ApiService().getUserProfile(uemail!);
     setState(() {
+      //load user information from database
       _userDetails = userDetails;
       yearGroup.text = _userDetails!["year"];
       userMajor.text = _userDetails!["major"];
@@ -41,8 +42,6 @@ class _EditProfileState extends State<EditProfile> {
       favFood.text = _userDetails!["food"];
       res.text = _userDetails!["res"];
       dob.text = _userDetails!["dob"];
-      print("got here");
-      print(_userDetails!['food']);
     });
   }
 
@@ -60,15 +59,14 @@ class _EditProfileState extends State<EditProfile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                    child: const Icon(
+                const Center(
+                    child: Icon(
                   Icons.person,
                   size: 100.0,
                 )),
                 const Text("Favorite Food"),
                 TextFormField(
                   controller: favFood,
-                  //initialValue: _userDetails!['food'] ?? "",
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your favorite food';
@@ -252,14 +250,17 @@ class _EditProfileState extends State<EditProfile> {
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
+                    //if all fields are valid
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
+                      //change user details
                       await ApiService().editUserProfile(_userDetails!['id'],
                           food: favFood.text,
                           movie: favMovie.text,
                           year: yearGroup.text,
                           major: userMajor.text,
                           res: res.text);
+                      //soon after save, go to the profile page
                       GoRouter.of(context).go('/homepage/view_profile');
                     }
                   },

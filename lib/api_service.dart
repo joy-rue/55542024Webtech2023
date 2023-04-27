@@ -9,10 +9,10 @@ import 'package:webtech_flutter_app/constants.dart';
 class ApiService {
 // Obtains the user information from the database using the given id
 // Returns the information as a map
-  Future<Map<String, dynamic>?>? getUserProfile(String id) async {
+  Future<Map<String, dynamic>?>? getUserProfile(String email) async {
     try {
       var url = Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.viewProfile}?id=$id');
+          '${ApiConstants.baseUrl}${ApiConstants.viewProfile}?email=$email');
       var response = await http.get(
         url,
       );
@@ -108,12 +108,17 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>?> createPost(
-      String email, String message, String date) async {
+      String email, String message, String date, String name) async {
     try {
       var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.createPost}');
       var response = await http.post(url,
           body: jsonEncode(
-            <String, dynamic>{'email': email, 'message': message, 'date': date},
+            <String, dynamic>{
+              'name': name,
+              'email': email,
+              'message': message,
+              'date': date
+            },
           ));
       if (response.statusCode == 200) {
         Map<String, dynamic> model = jsonDecode(response.body);

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webtech_flutter_app/api_service.dart';
+import 'package:intl/intl.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -27,6 +28,8 @@ class _FeedPageState extends State<FeedPage> {
               case ConnectionState.active:
               case ConnectionState.waiting:
                 if (snapshot.hasData) {
+                  snapshot.data!.sort((a, b) => DateTime.parse(b['date'])
+                      .compareTo(DateTime.parse(a['date'])));
                   var user = snapshot.data!;
                   print(snapshot.data![
                       0]); //snapshot.data contains values name, message etc not the list
@@ -60,17 +63,18 @@ class _FeedPageState extends State<FeedPage> {
                                 Text(
                                   post['email'],
                                   style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(height: 8.0),
+                                const SizedBox(height: 8.0, width: 16.0),
                                 Text(
                                   post['message'],
                                   style: const TextStyle(
                                     fontSize: 16.0,
                                   ),
                                 ),
-                                const SizedBox(height: 16.0),
+                                const SizedBox(height: 8.0, width: 16.0),
                                 Text(
                                   post['date'].toString(),
                                   style: const TextStyle(
