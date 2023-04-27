@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:webtech_flutter_app/api_service.dart';
+import 'package:webtech_flutter_app/widgets/user_input.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({Key? key}) : super(key: key);
@@ -28,19 +29,21 @@ class _CreatePostState extends State<CreatePost> {
   }
 
   Future<void> _getUserEmail() async {
+    //obtain user email from firebase authentication
     String? userE = FirebaseAuth.instance.currentUser!.email;
     Map<String, dynamic>? userDetails =
         await ApiService().getUserProfile(userE!);
 
     setState(() {
       _userDetails = userDetails;
-      _emailController.text = _userDetails!['email'];
+      _emailController.text = userE;
       name = _userDetails!['name'];
     });
   }
 
   @override
   void dispose() {
+    //dispose controllers after use
     _emailController.dispose();
     _messageController.dispose();
     super.dispose();
@@ -48,7 +51,6 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    final currentContxt = context;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Post Message'),
@@ -57,61 +59,34 @@ class _CreatePostState extends State<CreatePost> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/wallpaper.png"),
-            fit: BoxFit.cover,
+            fit: BoxFit.cover, //fill background with wallpaper
           ),
         ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: 'Enter your email',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.all(16.0),
-                  ),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                ),
+              //use the created widget Userinput
+              UserInput(
+                controller: _emailController,
+                hintText: 'Enter your email',
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: _messageController,
-                  decoration: InputDecoration(
-                    hintText: 'Enter your message',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.all(16.0),
-                  ),
-                  onChanged: (value) {
-                    message = value;
-                  },
-                ),
+              UserInput(
+                controller: _messageController,
+                hintText: 'Write your message',
               ),
               const SizedBox(height: 16),
               ElevatedButton(
+                //async added to function as it makes to api
                 onPressed: () async {
                   try {
                     date = DateTime.now();
-                    String fDate =
-                        DateFormat('yyyy-MM-dd HH:mm:ss').format(date);
-                    await ApiService().createPost(
-                        _emailController.text, message, fDate, name);
+                    String fDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(
+                        date); //date format shows time the message was sent
+                    await ApiService().createPost(_emailController.text,
+                        _messageController.text, fDate, name);
+                    //redirect to the Feed page
                     GoRouter.of(context).go('/homepage/view_posts');
                   } catch (error) {
                     print(error);

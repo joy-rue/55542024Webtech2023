@@ -206,7 +206,6 @@ class _EditProfileState extends State<EditProfile> {
                       borderSide: BorderSide(color: Colors.red),
                     ),
                     errorStyle: const TextStyle(fontSize: 12.0),
-                    hintText: 'Enter your favorite movie',
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -253,7 +252,7 @@ class _EditProfileState extends State<EditProfile> {
                     //if all fields are valid
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      //change user details
+                      //change user details by making call to the API
                       await ApiService().editUserProfile(_userDetails!['id'],
                           food: favFood.text,
                           movie: favMovie.text,

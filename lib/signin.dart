@@ -17,14 +17,16 @@ class _LoginState extends State<Login> {
   void _signInWithEmailAndPassword() async {
     try {
       UserCredential userCredential =
+      //firebase API call takes email and password for user authentication
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
+      //direct successful user to homepage 
       GoRouter.of(context).go('/homepage');
       ;
 
-      // User signed in
+      // user cannot proceed to the homepage
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -63,6 +65,7 @@ class _LoginState extends State<Login> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
+              //call function to verify details entered nd complete sign in
               onPressed: _signInWithEmailAndPassword,
               child: const Text('Sign In'),
             ),

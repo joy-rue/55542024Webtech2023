@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:webtech_flutter_app/widgets/viewtextfield.dart';
 import 'signin.dart';
 import 'api_service.dart';
 
@@ -33,14 +34,17 @@ class _ProfileViewState extends State<ProfileView> {
             ),
           ],
         ),
+        //asynchronously fetch user data from an API, and displaying the data once it is available.
         body: FutureBuilder(
             future: ApiService().getUserProfile(
-                uemail!), // a previously-obtained Future<String> or null
+                uemail!), 
             builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
               switch (snapshot.connectionState) {
+                //handle all connection states 
                 case ConnectionState.done:
                 case ConnectionState.active:
                 case ConnectionState.waiting:
+                //to prevent trying to load null values
                   if (snapshot.hasData) {
                     var user = snapshot.data!;
                     return SingleChildScrollView(
@@ -49,13 +53,13 @@ class _ProfileViewState extends State<ProfileView> {
                             children: [
                           Container(
                             height: 400,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Color.fromARGB(255, 138, 137, 137),
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(16.0),
                               child: CircleAvatar(
-                                  child: const Icon(
+                                  child:  Icon(
                                 Icons.person,
                                 size: 100.0,
                               )),
@@ -68,157 +72,62 @@ class _ProfileViewState extends State<ProfileView> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  ListTile(
-                                    title: const Text(
-                                      "Full name",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 80, 80, 80),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user["name"],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                  //make use of the custom made list tile to show each user detail
+                                  CustomListTile(
+                                    title: "Full name",
+                                    subtitle: user["name"],
                                   ),
                                   const Divider(
                                     color: Color.fromARGB(255, 107, 107, 107),
                                     thickness: .2,
                                   ),
-                                  ListTile(
-                                    title: const Text(
-                                      "Email",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user["email"],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                 CustomListTile(
+                                    title: "Email",
+                                    subtitle: user["email"],
                                   ),
                                   const Divider(
                                     color: Color.fromARGB(255, 12, 12, 12),
                                     thickness: 0.2,
                                   ),
-                                  ListTile(
-                                    title: const Text(
-                                      "Student ID",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user['id'],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                  CustomListTile(
+                                    title: "Student ID",
+                                    subtitle: user["id"],
                                   ),
                                   const Divider(
                                     color: Color.fromARGB(255, 12, 12, 12),
                                     thickness: .2,
                                   ),
-                                  ListTile(
-                                    title: const Text(
-                                      "Major",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user['major'],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                  CustomListTile(
+                                    title: "Major",
+                                    subtitle: user["major"],
                                   ),
                                   const Divider(
                                       color: Color.fromARGB(255, 12, 12, 12),
                                       thickness: .2),
-                                  ListTile(
-                                    title: const Text(
-                                      "Year",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user['year'],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                  CustomListTile(
+                                    title: "Year",
+                                    subtitle: user["year"],
                                   ),
                                   const Divider(
                                       color: Color.fromARGB(255, 12, 12, 12),
                                       thickness: .2),
-                                  ListTile(
-                                    title: const Text(
-                                      "Favorite food",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user['food'],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                  CustomListTile(
+                                    title: "Your favourite food",
+                                    subtitle: user["food"],
                                   ),
                                   const Divider(
                                       color: Color.fromARGB(255, 12, 12, 12),
                                       thickness: .2),
-                                  ListTile(
-                                    title: const Text(
-                                      "Favorite movies",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user['movie'],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                  CustomListTile(
+                                    title: "Your favourite movie",
+                                    subtitle: user["movie"],
                                   ),
                                   const Divider(
                                       color: Color.fromARGB(255, 12, 12, 12),
                                       thickness: .2),
-                                  ListTile(
-                                    title: const Text(
-                                      "Are you an On-campus resident",
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w200),
-                                    ),
-                                    subtitle: Text(
-                                      user['res'],
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 71, 71, 71),
-                                          fontWeight: FontWeight.w100),
-                                    ),
+                                  CustomListTile(
+                                    title: "Are you a campus resident?",
+                                    subtitle: user["res"],
                                   ),
                                 ],
                               ),
@@ -226,7 +135,9 @@ class _ProfileViewState extends State<ProfileView> {
                           )
                         ]));
                   } else {
-                    return Column(
+                    //if snapshot doesnt have data yet, keep loading
+                    return Center(
+                        child: Column(
                       children: const [
                         SizedBox(
                           width: 60,
@@ -234,10 +145,11 @@ class _ProfileViewState extends State<ProfileView> {
                           child: CircularProgressIndicator(),
                         ),
                       ],
-                    );
+                    ));
                   }
                 default:
-                  return Column(
+                  return Center(
+                      child: Column(
                     children: const [
                       SizedBox(
                         width: 60,
@@ -245,7 +157,7 @@ class _ProfileViewState extends State<ProfileView> {
                         child: CircularProgressIndicator(),
                       ),
                     ],
-                  );
+                  ));
               }
             }));
   }

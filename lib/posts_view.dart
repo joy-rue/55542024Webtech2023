@@ -18,9 +18,10 @@ class _FeedPageState extends State<FeedPage> {
       appBar: AppBar(
         title: const Text('Feed'),
       ),
+      //asynchronously obtain all posts from api and display
       body: FutureBuilder(
           future: ApiService()
-              .viewAllPosts(), // a previously-obtained Future<String> or null
+              .viewAllPosts(), 
           builder:
               (context, AsyncSnapshot<List<Map<String, dynamic>>?> snapshot) {
             switch (snapshot.connectionState) {
@@ -28,36 +29,40 @@ class _FeedPageState extends State<FeedPage> {
               case ConnectionState.active:
               case ConnectionState.waiting:
                 if (snapshot.hasData) {
+                  //convert the string to date time to enable sorting 
                   snapshot.data!.sort((a, b) => DateTime.parse(b['date'])
                       .compareTo(DateTime.parse(a['date'])));
-                  var user = snapshot.data!;
-                  print(snapshot.data![
-                      0]); //snapshot.data contains values name, message etc not the list
+                  
                   return Container(
+                    //background or wall papaer
                     decoration: const BoxDecoration(
                         image: DecorationImage(
                       image: AssetImage("assets/images/wallpaper.png"),
                       fit: BoxFit.cover,
                     )),
+                    //after posts are arranged, display one after the other as cards
                     child: ListView.builder(
-                      itemCount: snapshot.data!.length,
+                      itemCount: snapshot.data!.length, //to determine the number of cards to be built
                       itemBuilder: (BuildContext context, int index) {
+                        //index tracks the item number out of the total itemCount
+                        //obtain the post data @ index index and display
                         Map<String, dynamic> post = snapshot.data![index];
                         bool isMyPost = post['email'] ==
                             FirebaseAuth.instance.currentUser!
-                                .email; // Replace with the logged in user's email.
+                                .email;  //if the post email matches the current post to be displayed 
                         return Card(
                           elevation: 2.0,
                           margin: EdgeInsets.only(
                             top: 16.0,
                             bottom:
                                 index == snapshot.data!.length - 1 ? 12.0 : 0.0,
+                                //all user posts appear to the right when they are logged in
                             left: isMyPost ? 80.0 : 0.0,
                             right: isMyPost ? 0.0 : 80.0,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: Column(
+                            child: Column(//all the details of the post align to the beginining 
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -111,6 +116,7 @@ class _FeedPageState extends State<FeedPage> {
                 );
             }
           }),
+          //navigate to create_post for user to send message
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           GoRouter.of(context).go('/homepage/view_posts/create_post');

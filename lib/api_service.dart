@@ -1,14 +1,11 @@
 import 'dart:convert';
-// import 'dart:developer';
-
-// import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:webtech_flutter_app/constants.dart';
 
-// Has a collection of functions that send and retrieve data from database via the implimented API
+/// Has a collection of functions that send and retrieve data from database via the implimented API
 class ApiService {
-// Obtains the user information from the database using the given id
-// Returns the information as a map
+//Loads user information from the database using the given id
+//Returns the information as a map
   Future<Map<String, dynamic>?>? getUserProfile(String email) async {
     try {
       var url = Uri.parse(
@@ -27,7 +24,7 @@ class ApiService {
     return null;
   }
 
-  //Allows user to alter details in their profile, using post method
+  /// Allows user to alter details in their profile, using post method. Not all fields are mandatory
   Future<Map<String, dynamic>?> editUserProfile(String id,
       {String? name,
       String? email,
@@ -38,14 +35,9 @@ class ApiService {
       String? movie,
       String? res}) async {
     try {
+      //make post request to the API with the particular endpoint /editprof
       var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.editProfile}');
       var response = await http.post(url,
-          // headers: <String, String>{
-          //   'Content-Type': 'application/json',
-          //   'Accept': 'application/json', // Add this header
-          //   'Authorization':
-          //       'Bearer <YOUR_ACCESS_TOKEN>', // Add your access token here
-          // }, //body - in Json format
           body: jsonEncode(
             <String, dynamic>{
               'name': name,
@@ -70,6 +62,8 @@ class ApiService {
     return null;
   }
 
+  /// Create a profile for new user, all fields are required, else input empty strings
+
   Future<Map<String, dynamic>?> createUserProfile(
       String name,
       String email,
@@ -81,6 +75,7 @@ class ApiService {
       String movie,
       String res) async {
     try {
+      //make API call to endpoint /createprof using post and add body
       var url =
           Uri.parse('${ApiConstants.baseUrl}${ApiConstants.createProfile}');
       var response = await http.post(url,
@@ -107,6 +102,7 @@ class ApiService {
     return null;
   }
 
+  ///Create a new post , all given fields re required
   Future<Map<String, dynamic>?> createPost(
       String email, String message, String date, String name) async {
     try {
@@ -130,15 +126,12 @@ class ApiService {
     return null;
   }
 
+  ///Makes API call to load posts from the database
   Future<List<Map<String, dynamic>>?>? viewAllPosts() async {
     try {
       var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.viewPosts}');
       var response = await http.get(
         url,
-        // headers: <String, String>{
-        //   'Content-Type': 'application/json',
-        //   'Accept': 'application/json',
-        // },
       );
       if (response.statusCode == 200) {
         List<dynamic> responseData = jsonDecode(response.body);
