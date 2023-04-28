@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:webtech_flutter_app/api_service.dart';
+import 'package:webtech_flutter_app/services/api_service.dart';
 import 'package:intl/intl.dart';
 
 class FeedPage extends StatefulWidget {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:webtech_flutter_app/profile_view.dart';
-import 'package:webtech_flutter_app/posts_view.dart';
 
+///This isthe page user lands on soon after sign in
+///contains the navbar with links to all other pages
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
+      drawer: Drawer( //the side nav
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
           child: const Center(
             child: Text(
               'Ashesi Social Space',
-              style: TextStyle(fontWeight: FontWeight.w800),
+              style: TextStyle(fontWeight: FontWeight.w800, color: Colors.white,fontSize: 25),
             ),
           ),
         ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:webtech_flutter_app/widgets/viewtextfield.dart';
-import 'signin.dart';
-import 'api_service.dart';
+import 'services/signin.dart';
+import 'services/api_service.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});

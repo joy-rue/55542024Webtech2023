@@ -7,11 +7,11 @@ import 'package:webtech_flutter_app/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:webtech_flutter_app/posts_view.dart';
 import 'package:webtech_flutter_app/profile_view.dart';
-import 'package:webtech_flutter_app/signin.dart';
-import 'package:webtech_flutter_app/signup.dart';
+import 'package:webtech_flutter_app/services/signin.dart';
+import 'package:webtech_flutter_app/services/signup.dart';
 import 'edit_profile.dart';
-import 'firebase_options.dart';
-import 'api_service.dart';
+import 'firestore/firebase_options.dart';
+import 'services/api_service.dart';
 import 'landing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

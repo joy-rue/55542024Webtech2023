@@ -2,8 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:go_router/go_router.dart';
-import 'package:webtech_flutter_app/signin.dart';
-import 'package:webtech_flutter_app/signup.dart';
+import 'package:webtech_flutter_app/services/signin.dart';
+import 'package:webtech_flutter_app/services/signup.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override

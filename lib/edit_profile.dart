@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:webtech_flutter_app/api_service.dart';
+import 'package:webtech_flutter_app/services/api_service.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class _EditProfileState extends State<EditProfile> {
     var uemail = FirebaseAuth.instance.currentUser!.email;
     userDetails = await ApiService().getUserProfile(uemail!);
     setState(() {
-      //load user information from database
+      //load user information from database and assing intial value to text editing controllers
       _userDetails = userDetails;
       yearGroup.text = _userDetails!["year"];
       userMajor.text = _userDetails!["major"];
@@ -52,6 +52,7 @@ class _EditProfileState extends State<EditProfile> {
         title: const Text("Edit Profile"),
       ),
       body: SingleChildScrollView(
+        //allow overflow into second page
         child: Form(
           key: _formKey,
           child: Padding(
@@ -67,12 +68,6 @@ class _EditProfileState extends State<EditProfile> {
                 const Text("Favorite Food"),
                 TextFormField(
                   controller: favFood,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your favorite food';
-                    }
-                    return null;
-                  },
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 16.0),
@@ -105,12 +100,6 @@ class _EditProfileState extends State<EditProfile> {
                 const Text("Favorite Movie"),
                 TextFormField(
                   controller: favMovie,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your favorite movie';
-                    }
-                    return null;
-                  },
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 16.0),
@@ -176,6 +165,7 @@ class _EditProfileState extends State<EditProfile> {
                 TextFormField(
                   controller: yearGroup,
                   validator: (value) {
+                    //to avoid the case where the user removes previous data and fails to replace
                     if (value == null || value.isEmpty) {
                       return 'Please enter your year group';
                     }
@@ -213,6 +203,7 @@ class _EditProfileState extends State<EditProfile> {
                 TextFormField(
                   controller: userMajor,
                   validator: (value) {
+                    //so that if user removes previous data they replace
                     if (value == null || value.isEmpty) {
                       return 'Please enter your major';
                     }
