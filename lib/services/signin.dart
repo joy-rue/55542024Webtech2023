@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
-import 'package:webtech_flutter_app/homepage.dart';
+import 'package:webtech_flutter_app/pages/homepage.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

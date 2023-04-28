@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:webtech_flutter_app/constants.dart';
+import 'package:webtech_flutter_app/services/constants.dart';
 
 /// Has a collection of functions that send and retrieve data from database via the implimented API
 class ApiService {
